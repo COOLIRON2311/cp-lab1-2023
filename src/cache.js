@@ -1,6 +1,8 @@
 class Cache {
+    #dat;
+
     constructor() {
-        this._dat = new Map();
+        this.#dat = new Map();
         // return new Proxy(this, {
         //     // get: (obj, key) => {
         //     //     const v = obj._dat.get(key);
@@ -14,15 +16,18 @@ class Cache {
     }
 
     set(key, value, n_queries = 1) {
-        return this._dat.set(key, value);
+        this.#dat.set(key, {value: value, queries: n_queries});
     }
 
     get(key) {
-        const v = this._dat.get(key);
-        if (v === undefined)
+        const v = this.#dat.get(key);
+        if (v === undefined || v.queries === 0)
             return null;
         else
-            return v;
+        {
+            v.queries--;
+            return v.value;
+        }
     }
 }
 export { Cache }
