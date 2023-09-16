@@ -22,8 +22,7 @@ describe('queries functionality tests', () => {
     const v = 1;
 
     it('shouldn\'t return value if n_queries reaches zero', () => {
-        const c = new Cache();
-        c.set(k, v);
+        const c = new Cache([[k, v]]);
         expect(c.get(k)).toEqual(v);
         expect(c.get(k)).toBeNull();
     })
@@ -38,5 +37,32 @@ describe('queries functionality tests', () => {
             expect(c.get(k2)).toEqual(v);
         }
         expect(c.get(k2)).toBeNull();
+    });
+});
+
+describe('stats tests', () => {
+    const k = 'test';
+    const k2 = 'jest';
+    const v = 1;
+
+    it('should return empty list if data wasn\'t set', () => {
+        const c = new Cache();
+        expect(c.stats()).toEqual([]);
+    });
+
+    it('should return stats if data was set', () => {
+        const c = new Cache([[k, v]]);
+        expect(c.stats()).toEqual([({ key: k, value: v, queries: 1 })]);
+    });
+
+    it('should return different stats when data is setted/getted', () => {
+        const c = new Cache([[k, v]]);
+        c.get(k);
+        expect(c.stats()).toEqual([({ key: k, value: v, queries: 0 })]);
+        c.set(k2, v, 2);
+        expect(c.stats().sort()).toEqual([
+            ({ key: k, value: v, queries: 0 }),
+            ({ key: k2, value: v, queries: 2 })
+        ].sort());
     });
 });
