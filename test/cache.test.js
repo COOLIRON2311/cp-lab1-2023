@@ -38,6 +38,15 @@ describe('queries functionality tests', () => {
         }
         expect(c.get(k2)).toBeNull();
     });
+
+    it('should throw an error if n_queries has wrong type', () => {
+        try {
+            const c = new Cache([[k, v, 'test']]);
+        }
+        catch (e) {
+            expect(e.message).toEqual("invalid parameter 'test'");
+        }
+    });
 });
 
 describe('stats tests', () => {
@@ -66,6 +75,12 @@ describe('stats tests', () => {
             { key: k2, value: v, queries: 2 }
         ].sort());
     });
+
+    it('should handle missing key in stats', () => {
+        const c = new Cache();
+        c.get("missing");
+        expect(c.stats()).toEqual([{key: "missing", value: null, queries: null}]);
+    });
 });
 
 describe('smart constructor tests', () => {
@@ -83,8 +98,7 @@ describe('smart constructor tests', () => {
             const c = new Cache([[k, v], [k2, v, 2, 'this prank is going to be crazy💀💀']]);
         }
         catch (e) {
-            expect(e.message).toEqual("invalid parameter {jest,1,2,this prank is going to be crazy💀💀}");
+            expect(e.message).toEqual("invalid parameter 'jest,1,2,this prank is going to be crazy💀💀'");
         }
-
     });
 });
