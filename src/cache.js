@@ -1,8 +1,10 @@
 class Cache {
     #dat;
+    #log;
 
     constructor(options = null) {
         this.#dat = new Map();
+        this.#log = new Array();
         options?.forEach(element => {
             if (element.length > 3)
                 throw new Error(`invalid parameter {${element}}`);
@@ -16,21 +18,27 @@ class Cache {
 
     get(key) {
         const v = this.#dat.get(key);
-        if (v === undefined || v.queries === 0)
+        if (v === undefined || v.queries === 0) {
+            this.#log.push(({
+                key: key,
+                value: null,
+                queries: null
+            }));
             return null;
+        }
         else {
+            this.#log.push(({
+                key: key,
+                value: v.value,
+                queries: v.queries
+            }));
             v.queries--;
             return v.value;
         }
     }
 
     stats() {
-        // return Array.from(this.#dat.entries()).map(([k, v]) => ({
-        return [...this.#dat.entries()].map(([k, v]) => ({
-            key: k,
-            value: v.value,
-            queries: v.queries
-        }));
+        return this.#log;
     }
 }
 export { Cache }
