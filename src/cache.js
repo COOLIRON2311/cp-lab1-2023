@@ -6,8 +6,10 @@ class Cache {
         this.#dat = new Map();
         this.#log = new Array();
         options?.forEach(element => {
+            if (element.length === 3 && !Number.isInteger(element[2]))
+                throw new Error(`invalid parameter '${element[2]}'`)
             if (element.length > 3)
-                throw new Error(`invalid parameter {${element}}`);
+                throw new Error(`invalid parameter '${element}'`);
             this.set(...element);
         });
     }

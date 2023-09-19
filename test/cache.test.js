@@ -79,7 +79,7 @@ describe('stats tests', () => {
     it('should handle missing key in stats', () => {
         const c = new Cache();
         c.get("missing");
-        expect(c.stats()).toEqual([{key: "missing", value: null, queries: null}]);
+        expect(c.stats()).toEqual([{ key: "missing", value: null, queries: null }]);
     });
 });
 
