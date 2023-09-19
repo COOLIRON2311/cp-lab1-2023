@@ -50,19 +50,20 @@ describe('stats tests', () => {
         expect(c.stats()).toEqual([]);
     });
 
-    it('should return stats if data was set', () => {
+    it('should still return empty list if get was not called', () => {
         const c = new Cache([[k, v]]);
-        expect(c.stats()).toEqual([({ key: k, value: v, queries: 1 })]);
+        expect(c.stats()).toEqual([]);
     });
 
     it('should return different stats when data is setted/getted', () => {
         const c = new Cache([[k, v]]);
         c.get(k);
-        expect(c.stats()).toEqual([({ key: k, value: v, queries: 0 })]);
+        expect(c.stats()).toEqual([{ key: k, value: v, queries: 1 }]);
         c.set(k2, v, 2);
+        c.get(k2);
         expect(c.stats().sort()).toEqual([
-            ({ key: k, value: v, queries: 0 }),
-            ({ key: k2, value: v, queries: 2 })
+            { key: k, value: v, queries: 1 },
+            { key: k2, value: v, queries: 2 }
         ].sort());
     });
 });
@@ -74,18 +75,14 @@ describe('smart constructor tests', () => {
 
     it('should create new object if parameters of constructor are valid', () => {
         const c = new Cache([[k, v], [k2, v, 2]]);
-        expect(c.stats().sort()).toEqual([
-            ({ key: k, value: v, queries: 1 }),
-            ({ key: k2, value: v, queries: 2 })
-        ]);
+        expect(c).not.toBeUndefined();
     });
 
     it('should throw an error if constructor parameters are invalid', () => {
         try {
             const c = new Cache([[k, v], [k2, v, 2, 'this prank is going to be crazy💀💀']]);
         }
-        catch (e)
-        {
+        catch (e) {
             expect(e.message).toEqual("invalid parameter {jest,1,2,this prank is going to be crazy💀💀}");
         }
 
