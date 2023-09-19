@@ -1,3 +1,4 @@
+![](https://img.shields.io/badge/Coverage-100%25-83A603.svg?prefix=$coverage$)
 ## Limited Access Cache
 1. Реализуйте класс для работы с кэшем, поддерживающим конечное число обращений.
 2. Кэш хранит пары ключ-значение.
@@ -7,7 +8,7 @@
 6. Если пара ключ-значение задана без указания числа обращений, то число обращений равно 1.
 7. Нужна возможность получить статистику работы кэша в виде списка обращений:
 Ключ, Значение, Сколько осталось обращений.
-8. Разработку вести через TDD. 
+8. Разработку вести через TDD.
 
 ## Limited Access Cache (Eng)
 1. Implement a class to work with a cache that supports a finite number of hits.
@@ -37,4 +38,4 @@ npm run test
 npm run coverage
 ```
 
-   
+

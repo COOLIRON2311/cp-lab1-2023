@@ -1,13 +1,21 @@
 {
+  "jest": {
+    "coverageReporters": [
+      "json-summary",
+      "text"
+    ]
+  },
   "scripts": {
     "test": "jest",
-    "coverage": "jest --collect-coverage"
+    "coverage": "jest --collect-coverage",
+    "coverage:badge": "coverage-badge-creator"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
     "@babel/preset-env": "^7.19.1",
+    "@types/jest": "^29.5.5",
     "babel-jest": "^29.7.0",
-    "jest": "^29.7.0",
-    "@types/jest": "^29.5.5"
+    "coverage-badge-creator": "^1.0.18",
+    "jest": "^29.7.0"
   }
 }
