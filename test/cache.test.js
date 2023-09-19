@@ -66,3 +66,28 @@ describe('stats tests', () => {
         ].sort());
     });
 });
+
+describe('smart constructor tests', () => {
+    const k = 'test';
+    const k2 = 'jest';
+    const v = 1;
+
+    it('should create new object if parameters of constructor are valid', () => {
+        const c = new Cache([[k, v], [k2, v, 2]]);
+        expect(c.stats().sort()).toEqual([
+            ({ key: k, value: v, queries: 1 }),
+            ({ key: k2, value: v, queries: 2 })
+        ]);
+    });
+
+    it('should throw an error if constructor parameters are invalid', () => {
+        try {
+            const c = new new Cache([[k, v], [k2, v, 2, 'this prank is going to be crazy💀💀']]);
+        }
+        catch (e)
+        {
+            expect(e.message).toEqual("invalid parameter {jest,1,2,this prank is going to be crazy💀💀}");
+        }
+
+    });
+});
