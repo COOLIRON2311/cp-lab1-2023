@@ -4,6 +4,8 @@ class Cache {
     constructor(options = null) {
         this.#dat = new Map();
         options?.forEach(element => {
+            if (element.length > 3)
+                throw new Error(`invalid parameter {${element}}`);
             this.set(...element);
         });
     }
