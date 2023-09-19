@@ -82,7 +82,7 @@ describe('smart constructor tests', () => {
 
     it('should throw an error if constructor parameters are invalid', () => {
         try {
-            const c = new new Cache([[k, v], [k2, v, 2, 'this prank is going to be crazy💀💀']]);
+            const c = new Cache([[k, v], [k2, v, 2, 'this prank is going to be crazy💀💀']]);
         }
         catch (e)
         {
